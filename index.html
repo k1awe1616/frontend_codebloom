@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Codebloom</title>
+  <link rel="stylesheet" href="./capsstyle.css">
+</head>
+<body>
+<h1>Hello! Welcome to student Assessment Site.</h1>
+<form action="/" method="post">
+  <div class="box">
+    <div class="login">
+      <div class="loginBx">
+        <h2>
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Login
+        </h2>
+        <input id="username" name="username" type="text" placeholder="Username">
+        <input id="password" name="password" type="password" placeholder="Password">
+        <input type="submit" id="loginbutton" value="Log in" />
+        
+        <!-- Error message placeholder -->
+        <p id="error-message" style="color: red; display: none;">Incorrect email/password</p>
+
+        <div class="loading" id="loading" style="display: none;"></div>
+        <div class="group">
+          <a href="forgotpassword.html">Forgot Password</a>
+          <a href="registration.html">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+const form = document.querySelector('form');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault(); // Stop default form submission
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  const loading = document.getElementById('loading');
+  const errorMsg = document.getElementById('error-message');
+  loading.style.display = 'block';
+  errorMsg.style.display = 'none';
+
+  try {
+    const response = await fetch('https://codebloom-thesis.onrender.com/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    loading.style.display = 'none';
+
+    // If backend redirects after login
+    if (response.redirected) {
+      window.location.href = response.url;
+    } else {
+      // If login failed
+      const text = await response.text();
+      if (text.includes("error=1")) {
+        errorMsg.style.display = 'block';
+      }
+    }
+
+    // Save username locally
+    localStorage.setItem("username", username);
+
+  } catch (err) {
+    console.error('Login failed:', err);
+    loading.style.display = 'none';
+    errorMsg.style.display = 'block';
+    errorMsg.textContent = "Server error. Try again later.";
+  }
+});
+</script>
+
+</body>
+</html>
