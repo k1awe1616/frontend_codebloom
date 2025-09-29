@@ -11,8 +11,8 @@ if (username) {
 // Display welcome message
 const welcomeMsg = document.getElementById("welcome-msg");
 
-if (username) {
-  welcomeMsg.textContent = `Welcome, ${username}!`;
+if (fullname) {
+  welcomeMsg.textContent = `Welcome, ${fullname}!`;
 } else {
   // If no username in URL, try localStorage
   const storedUser = localStorage.getItem("username");
