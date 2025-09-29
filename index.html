@@ -53,6 +53,7 @@
 
         if (data.success) {
             localStorage.setItem("username", data.username);
+            
             window.location.href = "Menu.html?username=" + encodeURIComponent(data.username);
         } else {
             alert("❌ " + data.message);
