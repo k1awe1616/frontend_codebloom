@@ -40,6 +40,8 @@
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
+    const API_URL = "https://codebloom-thesis.onrender.com";
+
     try {
         const res = await fetch("https://codebloom-thesis.onrender.com/", {
             method: "POST",
