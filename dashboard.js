@@ -3,9 +3,12 @@ const scoresBtn = document.getElementById("scoresBtn");
 const namesBtn = document.getElementById("namesBtn");
 
 // Fetch accounts from backend
+const BACKEND_URL = "https://codebloom-thesis.onrender.com";
+
+// Fetch accounts from backend
 async function getStudents() {
     try {
-        const res = await fetch("/api/accounts");
+        const res = await fetch(`${BACKEND_URL}/api/accounts`);
         return await res.json();
     } catch (err) {
         console.error("Error fetching students:", err);
@@ -22,7 +25,7 @@ async function renderScores() {
     contentDiv.innerHTML = `<p class="loading">Loading scores...</p>`;
 
     try {
-        const res = await fetch("/api/overall-scores");
+        const res = await fetch(`${BACKEND_URL}/api/overall-scores`);
         const students = await res.json();
 
         if (!students.length) {
@@ -79,6 +82,7 @@ async function renderScores() {
         contentDiv.innerHTML = `<p class="loading">Error loading student scores.</p>`;
     }
 }
+
 
 // Render Student Names
 async function renderNames() {
